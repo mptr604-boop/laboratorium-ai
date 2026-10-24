@@ -49,3 +49,9 @@ test('stats: reports a current streak and flags too little data', () => {
   assert.equal(stats.currentStreak, 2);
   assert.equal(stats.enoughData, false);
 });
+
+test('errorStats: seria kolejnych błędów to nie wzorzec cykliczny', () => {
+  const stats = errorStats(['OK', 'OK', 'DEVICE_FAULT', 'DEVICE_FAULT', 'DEVICE_FAULT', 'DEVICE_FAULT']);
+  assert.equal(stats.periodEvery, null);
+  assert.equal(stats.currentStreak, 4);
+});

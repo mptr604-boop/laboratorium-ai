@@ -8,9 +8,10 @@ export function errorStats(statuses) {
   let currentStreak = 0;
   for (let i = total - 1; i >= 0 && statuses[i] !== 'OK'; i--) currentStreak++;
 
+  // Odstęp 1 to seria kolejnych błędów, a nie cykl, więc go pomijamy.
   // Stały odstęp między błędami (np. co trzeci pomiar) sugeruje przyczynę cykliczną: procedurę lub operatora.
   const gaps = faultIndexes.slice(1).map((v, i) => v - faultIndexes[i]);
-  const periodic = gaps.length >= 3 && gaps.every(g => g === gaps[0]) ? gaps[0] : null;
+  const periodic = gaps.length >= 3 && gaps[0] >= 2 && gaps.every(g => g === gaps[0]) ? gaps[0] : null;
 
   return {
     total,

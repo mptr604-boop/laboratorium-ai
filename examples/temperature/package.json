@@ -4,6 +4,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "demo": "node scripts/demo-assistant.js"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
   }
 }
