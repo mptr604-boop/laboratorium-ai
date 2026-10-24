@@ -7,7 +7,14 @@ export function parseFrame(raw) {
     return { temperature: null, status: 'DEVICE_FAULT' };
   }
 
-  const match = text.match(/^TEMP:\s*(-?\d+(?:\.\d+)?)\s*C$/i);
+  // Szkic ESP32 + DHT11 (examples/esp32-dht11) drukuje błąd własnym tekstem.
+  if (/^blad odczytu/i.test(text)) {
+    return { temperature: null, status: 'DEVICE_FAULT' };
+  }
+
+  // Linia z ESP32 ("Temperatura: 23.7 C, Wilgotnosc: 42 %"): bierzemy temperaturę,
+  // wilgotność obsługuje laboratorium-iot, tu nie jest potrzebna.
+  const match = text.match(/^(?:TEMP|Temperatura):\s*(-?\d+(?:\.\d+)?)\s*C(?:,\s*Wilgotnosc:\s*\d+(?:\.\d+)?\s*%)?$/i);
   if (!match) {
     return { temperature: null, status: 'CORRUPTED_TRANSMISSION' };
   }

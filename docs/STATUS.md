@@ -16,7 +16,8 @@ Zasada: **kod liczy, AI interpretuje, człowiek zatwierdza.** Szczegóły: [USTA
 | `docs/USTALENIA.md` | Decyzje, zakres, bezpieczeństwo, ewaluacja, otwarte pytania |
 | `docs/WZORZEC.md` | Wzorzec architektury (parser → kontrakt → baza → statystyki → AI) |
 | `docs/STATUS.md` | Ten plik |
-| `examples/temperature/` | Działający przykład na jednym polu: `npm test` (23 testy), `./scripts/smoke.sh` (curl), `npm run demo` |
+| `examples/temperature/` | Działający przykład na jednym polu: `npm test` (24 testy), `./scripts/smoke.sh` (curl), `npm run demo` |
+| `examples/esp32-dht11/` | Szkic ESP32 + DHT11 (źródło danych) i opis, jak połączyć go z laboratorium-iot |
 | `examples/temperature/src/assistant/` | Asystent: `schema`, `tools`, `assistant`, `mock-model`, `llm-model` |
 
 ## 3. Stan funkcji

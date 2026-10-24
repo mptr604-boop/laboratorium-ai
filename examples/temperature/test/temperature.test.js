@@ -13,6 +13,12 @@ test('parser maps ERR to a device fault with null temperature', () => {
   assert.deepEqual(parseFrame('ERR'), { temperature: null, status: 'DEVICE_FAULT' });
 });
 
+test('parser reads the ESP32 + DHT11 sketch lines (temperature only) and its error text', () => {
+  assert.deepEqual(parseFrame('Temperatura: 23.7 C, Wilgotnosc: 42 %'), { temperature: 23.7, status: 'OK' });
+  assert.deepEqual(parseFrame('Blad odczytu z DHT11 - sprawdz okablowanie'), { temperature: null, status: 'DEVICE_FAULT' });
+  assert.equal(parseFrame('Tmperatura: 23.7 C, Wilgotnosc: 42 %').status, 'CORRUPTED_TRANSMISSION');
+});
+
 test('parser never throws on garbage', () => {
   for (const input of ['', null, undefined, 'TEMP: abc C', '\u0000\u0001', 'TEMP: 1e999 C']) {
     assert.equal(parseFrame(input).status, 'CORRUPTED_TRANSMISSION');

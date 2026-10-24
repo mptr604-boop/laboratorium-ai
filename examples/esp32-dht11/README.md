@@ -1,0 +1,20 @@
+# ESP32 + DHT11: fizyczne źródło danych
+
+[main.cpp](./main.cpp) to szkic wgrywany na ESP32 (PlatformIO, biblioteka `DHT sensor library`). DHT11 jest podłączony do pinu 23.
+
+## Jak dane płyną
+
+```text
+ESP32 --USB (115200)--> most serial->TCP (laboratorium-iot: npm run esp32) --> baza --> asystent AI
+```
+
+1. Wgraj szkic i **zamknij monitor portu** (portu może czytać tylko jeden proces, inaczej giną znaki).
+2. W `laboratorium-iot`: `npm run seed`, `npm run tcp`, `npm run esp32`.
+3. Bez płytki: `ESP32_SIMULATE=1 npm run esp32` wysyła te same linie z symulatora.
+
+`examples/temperature` w tym repo rozumie te same linie (temperatura, bez wilgotności).
+
+## Zastrzeżenia
+
+- DHT11: ±2 °C i ±5 % wilgotności. To czujnik dydaktyczny.
+- Zgubioną cyfrę mieszczącą się w zakresie wykryłaby dopiero suma kontrolna w firmware (nie ma jej).
