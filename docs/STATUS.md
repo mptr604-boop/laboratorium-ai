@@ -61,3 +61,4 @@ Zasada: **kod liczy, AI interpretuje, człowiek zatwierdza.** Szczegóły: [USTA
 | 2026-10-24 | Wzorzec i przykład temperatury (parser, kontrakt, WAL, statystyki, logi) |
 | 2026-10-24 | `scripts/smoke.sh` (curl zamiast Swaggera) |
 | 2026-10-24 | `STATUS.md` i `AGENTS.md` (szybki start dla agentów) |
+| 2026-10-25 | Pomysł: agent doradzający przy decyzji fix/rollback na bazie dziennika wdrożeń (otwarte, w `USTALENIA.md`) |
