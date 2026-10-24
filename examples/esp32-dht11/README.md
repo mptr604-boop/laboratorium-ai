@@ -1,6 +1,8 @@
 # ESP32 + DHT11: fizyczne źródło danych
 
-[main.cpp](./main.cpp) to szkic wgrywany na ESP32 (PlatformIO, biblioteka `DHT sensor library`). DHT11 jest podłączony do pinu 23.
+[main.cpp](./main.cpp) to szkic wgrywany na ESP32 (PlatformIO, konfiguracja w [platformio.ini](./platformio.ini)). DHT11 jest podłączony do pinu 23.
+
+Odczyt DHT11 jest napisany ręcznie (bez biblioteki DHT), z limitem czasu na każdy krok i sumą kontrolną. Wersja z biblioteką przy odpiętym czujniku restartowała płytkę (watchdog) i zalewała port zrzutami paniki. Nowa wypisuje `Blad odczytu …` co 2 s. Sprawdzone na płytce: odczyty poprawne.
 
 ## Jak dane płyną
 
@@ -17,4 +19,5 @@ ESP32 --USB (115200)--> most serial->TCP (laboratorium-iot: npm run esp32) --> b
 ## Zastrzeżenia
 
 - DHT11: ±2 °C i ±5 % wilgotności. To czujnik dydaktyczny.
-- Zgubioną cyfrę mieszczącą się w zakresie wykryłaby dopiero suma kontrolna w firmware (nie ma jej).
+- Suma kontrolna jest sprawdzana w firmware. Zła suma to `Blad odczytu … zla suma kontrolna`.
+- Odpięty czujnik na żywo sprawdzono tylko dla starej wersji szkicu.
