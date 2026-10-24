@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test",
-    "demo": "node scripts/demo-assistant.js"
+    "demo": "node scripts/demo-assistant.js",
+    "demo:llm": "node scripts/demo-llm.js"
   },
   "dependencies": {
     "zod": "^4.6.7"

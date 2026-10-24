@@ -29,12 +29,14 @@ Zasada: **kod liczy, AI interpretuje, człowiek zatwierdza.** Szczegóły: [USTA
 | Narzędzia tylko do odczytu dla modelu (`src/assistant/tools.js`) | ✅ |
 | Pętla asystenta + walidacja wyjścia zod + strażniki (`assistant.js`) | ✅ przetestowane z atrapą modelu |
 | Zestaw ewaluacyjny (cykl, seria, mała próbka, brak anomalii, injection) | ✅ na atrapie, nie na prawdziwym modelu |
-| Adapter prawdziwego modelu (`llm-model.js`) | ⚠️ napisany, niesprawdzony na prawdziwym API |
+| Adapter prawdziwego modelu (`llm-model.js`) | ⚠️ sprawdzony na lokalnym `qwen2.5:3b` przez Ollamę (`npm run demo:llm`); wynik poniżej. Płatne API niesprawdzone |
 | Połączenie z prawdziwym `laboratorium-iot` (API tylko do odczytu) | ⏳ nie zaczęte |
 
 ## 4. Znane problemy i ograniczenia (stan faktyczny, bez upiększeń)
 
 - Zakres temperatur −50..100 °C to **założenie** przykładu, nie dane z aparatu.
+- **Test na prawdziwym modelu (qwen2.5:3b, Ollama, CPU):** z 4 przypadków 2 przeszły (mała próbka, samo OK), 2 odrzuciły strażniki (seria błędów, błąd co 3. pomiar). W przypadku „błąd co 3. pomiar” model zwrócił `no_anomaly` przy 33% błędów, czyli zły werdykt, a do tego zastrzeżenie własnymi słowami. Strażnik schematu odrzucił taką odpowiedź, więc zła diagnoza nie wyszła do użytkownika. Wniosek: otoczka działa, ale 3B to za mały model do tej analizy. Większego modelu (np. 7B) ani płatnego API nie sprawdzano.
+- Pierwszy test na prawdziwym modelu ujawnił luki, których atrapa nie pokazała: prompt nie wymieniał narzędzi ani kształtu odpowiedzi, a pętla nie dodawała do rozmowy tury modelu. Oba poprawione.
 - Atrapa modelu to reguły, więc eval sprawdza otoczkę (schemat, narzędzia, strażniki), a **nie jakość prawdziwego modelu**. Tę trzeba ocenić osobno.
 - Prompt injection: testy dowodzą, że model nie dostanie narzędzia zapisu i że wynik jest walidowany. Nie dowodzą, że prawdziwy model nie da się zmanipulować treścią hipotezy.
 - `errorStats` uznaje „za mało danych" poniżej 10 pomiarów. Próg jest arbitralny.
@@ -54,7 +56,7 @@ Zasada: **kod liczy, AI interpretuje, człowiek zatwierdza.** Szczegóły: [USTA
 ## 6. Następne kroki
 
 1. Sprawdzić billing / limity modelu (przed jakimkolwiek wywołaniem API).
-2. Uruchomić `llm-model.js` na prawdziwym API i porównać z atrapą na tym samym zestawie.
+2. Powtórzyć `npm run demo:llm` na większym modelu (7B lub płatne API) i porównać z atrapą.
 3. Dopiero potem połączenie z `laboratorium-iot` (API tylko do odczytu).
 
 ## 7. Dziennik zmian
